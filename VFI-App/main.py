@@ -1,12 +1,12 @@
 from analytics import Analytics
+from advisor import Advisor
 
 club = Analytics()
+advisor = Advisor()
 
-print()
-print("=" * 45)
-print("        PROJECT VICTOR")
-print("=" * 45)
-
+print("=" * 55)
+print("                 PROJECT VICTOR")
+print("=" * 55)
 print()
 
 print(f"Squad Size: {club.squad_size()}")
@@ -14,12 +14,11 @@ print(f"Average Overall: {club.average_overall()}")
 print(f"Average Potential: {club.average_potential()}")
 
 print()
-print("Top Club Assets")
-print("-" * 45)
+print("Victor Advisor")
+print("-" * 55)
 
-for player in club.victor_rankings()[:10]:
+for player, action in advisor.development_priority()[:10]:
 
     print(
-        f"{player.name:<25}"
-        f"{player.victor_score:>5}"
+        f"{action:<18}{player.name}"
     )
