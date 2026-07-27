@@ -1,51 +1,25 @@
-import json
-from pathlib import Path
+from analytics import Analytics
 
-ROOT = Path(__file__).resolve().parent.parent
-SNAPSHOT = ROOT / "VFI-snapshots" / "club_snapshot.json"
-
-with open(SNAPSHOT, "r", encoding="utf-8") as f:
-    club = json.load(f)
-
-players = club["players"]
-
-average_overall = sum(p["overall"] for p in players) / len(players)
-average_potential = sum(p["potential"] for p in players) / len(players)
-
-highest_rated = sorted(players, key=lambda p: p["overall"], reverse=True)
-highest_potential = sorted(players, key=lambda p: p["potential"], reverse=True)
-
-print("=" * 42)
-print("        PROJECT VICTOR v0.4")
-print("=" * 42)
-print()
-
-print(f"Squad Size: {len(players)}")
-print(f"Average Overall: {average_overall:.1f}")
-print(f"Average Potential: {average_potential:.1f}")
+club = Analytics()
 
 print()
-print("Elite Prospects")
-print("-" * 42)
+print("=" * 45)
+print("        PROJECT VICTOR")
+print("=" * 45)
 
-for player in highest_potential[:5]:
+print()
+
+print(f"Squad Size: {club.squad_size()}")
+print(f"Average Overall: {club.average_overall()}")
+print(f"Average Potential: {club.average_potential()}")
+
+print()
+print("Top Club Assets")
+print("-" * 45)
+
+for player in club.victor_rankings()[:10]:
+
     print(
-        f"{player['name']:<25}"
-        f"{player['overall']:>2} -> {player['potential']}"
+        f"{player.name:<25}"
+        f"{player.victor_score:>5}"
     )
-
-print()
-print("Top Rated Players")
-print("-" * 42)
-
-for player in highest_rated[:5]:
-    print(
-        f"{player['overall']:>2}  {player['name']}"
-    )
-
-print()
-print("Development Priority")
-print("-" * 42)
-
-for player in highest_potential[:3]:
-    print(f"⭐ {player['name']}")
