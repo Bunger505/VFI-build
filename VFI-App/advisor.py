@@ -1,33 +1,49 @@
 from analytics import Analytics
+from dialogue import VictorDialogue
 
 
 class Advisor:
 
     def __init__(self):
         self.club = Analytics()
+        self.voice = VictorDialogue()
 
-    def development_priority(self):
+    def morning_brief(self):
 
-        players = self.club.victor_rankings()
+        top_player = self.club.victor_rankings()[0]
 
-        recommendations = []
+        report = []
 
-        for player in players:
+        report.append(self.voice.greeting())
+        report.append("")
 
-            growth = player.growth
+        report.append(self.voice.franchise_player(top_player))
+        report.append("")
 
-            if growth >= 15:
-                action = "🔥 Build Around"
+        report.append(self.voice.closing())
 
-            elif growth >= 10:
-                action = "⭐ Develop"
+        return "\n".join(report)
 
-            elif growth >= 5:
-                action = "📈 Rotate"
+    def player_report(self, player):
 
-            else:
-                action = "✔ Maintain"
+        if player.overall >= 78:
+            status = "🛡 First Team"
+            advice = self.voice.squad_player(player)
 
-            recommendations.append((player, action))
+        elif player.potential >= 90:
+            status = "🔥 Franchise Player"
+            advice = self.voice.franchise_player(player)
 
-        return recommendations
+        elif player.growth >= 15:
+            status = "⭐ Elite Prospect"
+            advice = self.voice.elite_prospect(player)
+
+        elif player.growth >= 8:
+            status = "📈 Development"
+            advice = self.voice.develop_player(player)
+
+        else:
+            status = "📤 Loan Candidate"
+            advice = self.voice.loan_player(player)
+
+        return status, advice
