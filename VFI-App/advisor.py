@@ -16,34 +16,32 @@ class Advisor:
 
         report.append(self.voice.greeting())
         report.append("")
-
         report.append(self.voice.franchise_player(top_player))
         report.append("")
-
         report.append(self.voice.closing())
 
         return "\n".join(report)
 
     def player_report(self, player):
 
-        if player.overall >= 78:
-            status = "🛡 First Team"
-            advice = self.voice.squad_player(player)
+        if player.potential >= 90:
 
-        elif player.potential >= 90:
             status = "🔥 Franchise Player"
             advice = self.voice.franchise_player(player)
 
         elif player.growth >= 15:
+
             status = "⭐ Elite Prospect"
-            advice = self.voice.elite_prospect(player)
+            advice = self.voice.elite_player(player)
 
         elif player.growth >= 8:
+
             status = "📈 Development"
-            advice = self.voice.develop_player(player)
+            advice = self.voice.loan_player(player)
 
         else:
-            status = "📤 Loan Candidate"
-            advice = self.voice.loan_player(player)
+
+            status = "✔ Squad Player"
+            advice = f"{player.name}...\nReliable squad member."
 
         return status, advice
