@@ -1,27 +1,12 @@
-from analytics import Analytics
-from advisor import Advisor
+"""Launch the Project Victor Football Intelligence Terminal."""
 
-club = Analytics()
-advisor = Advisor()
+from gui import VictorTerminal
 
-print("=" * 60)
-print("               PROJECT VICTOR")
-print("=" * 60)
-print()
 
-print(advisor.morning_brief())
+def main() -> None:
+    """Start the desktop terminal."""
+    VictorTerminal().run()
 
-print()
-print("=" * 60)
-print("TOP CLUB ASSETS")
-print("=" * 60)
 
-for player in club.victor_rankings()[:5]:
-
-    status, advice = advisor.player_report(player)
-
-    print()
-    print(f"{player.name}")
-    print(status)
-    print(f"OVR {player.overall} | POT {player.potential}")
-    print(advice)
+if __name__ == "__main__":
+    main()
